@@ -1,4 +1,6 @@
-import { generatePhotos } from './data.mjs';
+// main.mjs
+import { renderPhotos } from './showpictures.mjs';
 
-const photos = generatePhotos();
-photos();
+document.addEventListener('DOMContentLoaded', () => {
+  renderPhotos(); // Вызываем отрисовку фотографий после загрузки DOM
+});
