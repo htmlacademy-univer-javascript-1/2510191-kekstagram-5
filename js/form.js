@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import { resetZoomValue } from './zoom.js';
+import { onChangeEffect } from './effects.js';
 
 const MAX_TAGS = 5;
 const TAGS_PATTERN = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -16,6 +18,7 @@ const fieldForHashTages = document.querySelector('.text__hashtags');
 const fieldForDescription = document.querySelector('.text__description');
 const cancelButton = form.querySelector('.img-upload__cancel');
 const inputButton = form.querySelector('.img-upload__input');
+const effectsList = document.querySelector('.effects__list');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -26,14 +29,17 @@ const openForm = () =>{
   overlay.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeyDown);
+  effectsList.addEventListener('click', onChangeEffect);
 };
 
 const closeForm = () => {
   form.reset();
   pristine.reset();
+  resetZoomValue();
   overlay.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeyDown);
+  effectsList.removeEventListener('click', onChangeEffect);
 };
 
 const convertTagsList = (string) => string.trim().split(' ').filter((tag) => Boolean(tag.length));
