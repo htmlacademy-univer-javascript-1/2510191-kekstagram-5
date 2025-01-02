@@ -8,4 +8,17 @@ for (let i = 1; i <= 25; i++) {
   posts.push(currentPhoto);
 }
 
-renderPictures(posts);
+renderPictures(posts);import { showFilteredPictures } from './filter.js';
+import { getData } from './api.js';
+import { showAlert } from './util.js';
+import './form.js';
+
+const loadPictures = async () => {
+  try {
+    showFilteredPictures(await getData());
+  } catch (err){
+    showAlert(err);
+  }
+};
+
+loadPictures();
