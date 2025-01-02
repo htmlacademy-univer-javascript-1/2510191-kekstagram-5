@@ -9,8 +9,23 @@ const EFFECTS = {
 
 const slider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
-const previewPicture = document.querySelector('.img-upload__preview');
+const previewPicture = document.querySelector('.img-upload__preview img');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
+
+const removeFilter = () => {
+  if (slider.noUiSlider) {
+    slider.noUiSlider.destroy();
+  }
+
+  previewPicture.style.filter = '';
+  previewPicture.className = '';
+
+  document.getElementById('effect-none').checked = true;
+
+  sliderContainer.classList.add('hidden');
+  effectLevelValue.value = '';
+};
+
 
 sliderContainer.classList.add('hidden');
 
@@ -26,45 +41,37 @@ function onChangeEffect(evt){
   }
 }
 
-function updateEffect(effect){
-  if (effect !== 'none'){
+function updateEffect(effect) {
+  if (effect !== 'none') {
     sliderContainer.classList.remove('hidden');
     noUiSlider.create(slider, {
       range: {
         min: EFFECTS[effect]['min'],
-        max: EFFECTS[effect]['max']
+        max: EFFECTS[effect]['max'],
       },
       start: EFFECTS[effect]['max'],
       step: EFFECTS[effect]['step'],
-      connect: 'lower'
+      connect: 'lower',
     });
 
-    slider.noUiSlider.on('update', ()=>{
-      effectLevelValue['value'] = slider.noUiSlider.get();
-
-      switch(effect){
-        case 'chrome':
-          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${slider.noUiSlider.get()})`;
-          break;
-        case 'sepia':
-          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${slider.noUiSlider.get()})`;
-          break;
+    slider.noUiSlider.on('update', () => {
+      const value = slider.noUiSlider.get();
+      effectLevelValue.value = value;
+      switch (effect) {
         case 'marvin':
-          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${slider.noUiSlider.get()}%)`;
+          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${value}%)`;
           break;
         case 'phobos':
-          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${slider.noUiSlider.get()}px)`;
+          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${value}px)`;
           break;
-        case 'heat':
-          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${slider.noUiSlider.get()})`;
+        default:
+          previewPicture.style.filter = `${EFFECTS[effect]['style']}(${value})`;
           break;
       }
     });
-  } else{
-    sliderContainer.classList.add('hidden');
-    effectLevelValue['value'] = '';
-    previewPicture.style.filter = '';
+  } else {
+    removeFilter();
   }
 }
 
-export { onChangeEffect };
+export { onChangeEffect, removeFilter };
