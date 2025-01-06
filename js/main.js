@@ -5,9 +5,10 @@ import './form.js';
 
 const loadPictures = async () => {
   try {
-    showFilteredPictures(await getData());
-  } catch (err){
-    showAlert(err);
+    const pictures = await getData();
+    showFilteredPictures(pictures);
+  } catch (error) {
+    showAlert(error);
   }
 };
 

@@ -1,24 +1,24 @@
 const SERVER_URL = 'https://29.javascript.htmlacademy.pro/kekstagram';
 
-const ROUTES = {
-  GET_DATA:'/data',
-  SEND_DATA:'/'
+const Routes = {
+  GetData: '/data',
+  SendData: '/'
 };
 
-const HTTP_REQUESTS = {
-  GET:'GET',
-  POST: 'POST'
+const HttpRequests = {
+  Get: 'GET',
+  Post: 'POST'
 };
 
 const ErrorText = {
-  GET_DATA: 'Не удалось загрузить данные с сервера',
-  SEND_DATA: 'Не удалось отправить форму'
+  GetData: 'Не удалось загрузить данные с сервера',
+  SendData: 'Не удалось отправить форму'
 };
 
-const loadData = (route, errorText, method = HTTP_REQUESTS.GET, body = null) =>
-  fetch(`${SERVER_URL}${route}`, {method, body})
+const loadData = (route, errorText, method = HttpRequests.Get, body = null) =>
+  fetch(`${SERVER_URL}${route}`, { method, body })
     .then((response) => {
-      if (response.ok){
+      if (response.ok) {
         return response.json();
       }
     })
@@ -26,8 +26,8 @@ const loadData = (route, errorText, method = HTTP_REQUESTS.GET, body = null) =>
       throw new Error(errorText);
     });
 
-const getData = () => loadData(ROUTES.GET_DATA, ErrorText.GET_DATA);
+const getData = () => loadData(Routes.GetData, ErrorText.GetData);
 
-const sendData = (body) => loadData(ROUTES.SEND_DATA, ErrorText.SEND_DATA, HTTP_REQUESTS.POST, body);
+const sendData = (body) => loadData(Routes.SendData, ErrorText.SendData, HttpRequests.Post, body);
 
-export {getData, sendData};
+export { getData, sendData };

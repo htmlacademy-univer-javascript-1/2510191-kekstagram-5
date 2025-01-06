@@ -3,30 +3,30 @@ const ZOOM_STEP = 25;
 const DEFAULT_ZOOM_VALUE = 100;
 const MAX_ZOOM_VALUE = 100;
 
-const umploadZoom = document.querySelector('.img-upload__scale');
-const zoomSmaller = umploadZoom.querySelector('.scale__control--smaller');
-const zoomBigger = umploadZoom.querySelector('.scale__control--bigger');
-const zoomValue = umploadZoom.querySelector('.scale__control--value');
-const picture = document.querySelector('.img-upload__preview img');
+const uploadZoomElement = document.querySelector('.img-upload__scale');
+const zoomSmallerElement = uploadZoomElement.querySelector('.scale__control--smaller');
+const zoomBiggerElement = uploadZoomElement.querySelector('.scale__control--bigger');
+const zoomValueElement = uploadZoomElement.querySelector('.scale__control--value');
+const pictureElement = document.querySelector('.img-upload__preview img');
 
 const zoomImage = (value) => {
-  picture.style.transform = `scale(${value / 100})`;
-  zoomValue.value = `${value}%`;
+  pictureElement.style.transform = `scale(${value / 100})`;
+  zoomValueElement.value = `${value}%`;
 };
 
 const onBiggerZoomClick = () => {
-  const biggerValue = parseInt(zoomValue.value, 10) + ZOOM_STEP;
+  const biggerValue = parseInt(zoomValueElement.value, 10) + ZOOM_STEP;
   zoomImage(Math.min(biggerValue, MAX_ZOOM_VALUE));
 };
 
 const onSmallerZoomClick = () => {
-  const smallerValue = parseInt(zoomValue.value, 10) - ZOOM_STEP;
+  const smallerValue = parseInt(zoomValueElement.value, 10) - ZOOM_STEP;
   zoomImage(Math.max(smallerValue, MIN_ZOOM_VALUE));
 };
 
 const resetZoomValue = () => zoomImage(DEFAULT_ZOOM_VALUE);
 
-zoomBigger.addEventListener('click', onBiggerZoomClick);
-zoomSmaller.addEventListener('click', onSmallerZoomClick);
+zoomBiggerElement.addEventListener('click', onBiggerZoomClick);
+zoomSmallerElement.addEventListener('click', onSmallerZoomClick);
 
 export { resetZoomValue };

@@ -1,16 +1,16 @@
-import {isEscapeKey} from './util.js';
+import { isEscapeKey } from './util.js';
 
-const body = document.body;
-const successMessage = document.querySelector('#success').content.querySelector('.success');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
+const bodyElement = document.body;
+const successMessageElement = document.querySelector('#success').content.querySelector('.success');
+const errorMessageElement = document.querySelector('#error').content.querySelector('.error');
 
 const hideMessage = () => {
-  const message = document.querySelector('.success') || document.querySelector('.error');
-  const messageCloseButton = document.querySelector('.success__button') || document.querySelector('.error__button');
+  const messageElement = document.querySelector('.success') || document.querySelector('.error');
+  const messageCloseButtonElement = document.querySelector('.success__button') || document.querySelector('.error__button');
   document.removeEventListener('keydown', closeMessageByEscape);
-  body.removeEventListener('click', closeMessageByBodyClick);
-  messageCloseButton.removeEventListener('click', hideMessage);
-  message.remove();
+  bodyElement.removeEventListener('click', closeMessageByBodyClick);
+  messageCloseButtonElement.removeEventListener('click', hideMessage);
+  messageElement.remove();
 };
 
 function closeMessageByEscape(evt) {
@@ -26,15 +26,14 @@ function closeMessageByBodyClick(evt) {
   }
 }
 
-const showMessage = (message, messageCloseButton) => {
-  body.append(message);
+const showMessage = (messageElement, messageCloseButtonSelector) => {
+  bodyElement.append(messageElement);
   document.addEventListener('keydown', closeMessageByEscape);
-  body.addEventListener('click', closeMessageByBodyClick);
-  body.querySelector(messageCloseButton).addEventListener('click', hideMessage);
+  bodyElement.addEventListener('click', closeMessageByBodyClick);
+  bodyElement.querySelector(messageCloseButtonSelector).addEventListener('click', hideMessage);
 };
 
-const showSuccessMessage = () => showMessage(successMessage, '.success__button');
+const showSuccessMessage = () => showMessage(successMessageElement, '.success__button');
+const showErrorMessage = () => showMessage(errorMessageElement, '.error__button');
 
-const showErrorMessage = () => showMessage(errorMessage, '.error__button');
-
-export {showSuccessMessage, showErrorMessage};
+export { showSuccessMessage, showErrorMessage };
