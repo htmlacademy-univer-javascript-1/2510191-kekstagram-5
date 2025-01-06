@@ -3,7 +3,7 @@ import { openBigPicture } from './big-picture.js';
 const picturesList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-const createPictureElement = (picture) => {
+const createPicture = (picture) => {
   const newPicture = pictureTemplate.cloneNode(true);
   newPicture.querySelector('.picture__img').src = picture.url;
   newPicture.querySelector('.picture__img').alt = picture.description;
@@ -20,8 +20,8 @@ const createPictureElement = (picture) => {
 const createPicturesFragment = (pictures) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
-    const pictureElement = createPictureElement(picture);
-    fragment.appendChild(pictureElement);
+    const pictureItem = createPicture(picture);
+    fragment.appendChild(pictureItem);
   });
   return fragment;
 };
